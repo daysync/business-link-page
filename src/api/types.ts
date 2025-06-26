@@ -1,3 +1,26 @@
+export interface ServiceCategory {
+  id: string;
+  name: string;
+  description: string;
+  profileId: string;
+  theme: string;
+}
+
+export interface Service {
+  id: string;
+  name: string;
+  description: string;
+  duration: number;
+  price: string;
+  priceType: string;
+  categoryId: string;
+  onlineBooking: boolean;
+  variablePrice: boolean;
+  profileId: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface MasterProfile {
   id: string;
   avatar: string | null;
@@ -10,7 +33,8 @@ export interface MasterProfile {
   socials: any;
   username: string;
   address: string | null;
-  services: any[] | null;
+  services: Service[] | null;
+  serviceCategories: ServiceCategory[] | null;
   workingHours: {
     [key: string]: {
       end: number;

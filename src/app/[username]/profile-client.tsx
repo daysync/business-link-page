@@ -72,28 +72,28 @@ export default function ProfileClient({ username }: ProfileClientProps) {
     if (!profileData?.workingHours) return [];
 
     const dayNames = [
+      "sunday",
       "monday",
       "tuesday",
       "wednesday",
       "thursday",
       "friday",
       "saturday",
-      "sunday",
     ];
     const dayDisplayNames = [
+      "Sunday",
       "Monday",
       "Tuesday",
       "Wednesday",
       "Thursday",
       "Friday",
       "Saturday",
-      "Sunday",
     ];
 
     return dayNames.map((day, index) => {
       const dayData = profileData.workingHours[day];
 
-      if (dayData.closed) {
+      if (!dayData || dayData.closed) {
         return {
           day: dayDisplayNames[index],
           hours: "Closed",
@@ -134,46 +134,133 @@ export default function ProfileClient({ username }: ProfileClientProps) {
   // Show error state
   if (error || !masterData) {
     return (
-      <div className="min-h-screen bg-daysync-background font-inter flex items-center justify-center">
-        <div className="max-w-lg mx-auto bg-white min-h-screen relative flex items-center justify-center">
-          <div className="text-center px-6">
-            <div className="text-6xl mb-4">😞</div>
-            <h2 className="text-xl font-semibold text-daysync-primary-text mb-2">
-              Profile Not Found
-            </h2>
-            <p className="text-daysync-secondary-text mb-4">{error}</p>
-            <button
-              onClick={() => window.location.reload()}
-              className="bg-daysync-primary text-white px-6 py-2 rounded-lg hover:bg-daysync-secondary transition-colors"
-            >
-              Try Again
-            </button>
+      <>
+        <Head>
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
+          <meta name="theme-color" content="#016A70" />
+        </Head>
+
+        <div className="min-h-screen font-inter">
+          {/* Background decoration */}
+          <div className="fixed inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute -top-40 -right-40 w-96 h-96 bg-glass-primary/10 rounded-full blur-3xl animate-float" />
+            <div
+              className="absolute -bottom-40 -left-40 w-96 h-96 bg-glass-secondary/10 rounded-full blur-3xl animate-float"
+              style={{ animationDelay: "2s" }}
+            />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-glass-primary/5 to-glass-secondary/5 rounded-full blur-3xl" />
+          </div>
+
+          <div className="max-w-lg mx-auto min-h-screen relative bg-gradient-to-b from-white/40 via-white/30 to-white/40 backdrop-blur-sm shadow-2xl">
+            {/* Header with same styling */}
+            <div className="relative bg-white/40 backdrop-blur-2xl border-b border-white/20">
+              <div className="absolute inset-0">
+                <div className="absolute inset-0 bg-gradient-to-br from-glass-primary/10 via-transparent to-glass-secondary/10" />
+                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/50 to-transparent" />
+              </div>
+
+              <div className="relative z-10 px-4 sm:px-6 pt-16 sm:pt-20 pb-12 sm:pb-16">
+                <div className="flex flex-col items-center space-y-5">
+                  <div className="relative">
+                    <div className="absolute -inset-4 bg-gradient-to-r from-glass-primary/20 to-glass-secondary/20 rounded-full blur-2xl opacity-60" />
+                    <div className="relative w-24 h-24 rounded-full overflow-hidden shadow-glass">
+                      <div className="absolute inset-0 bg-white/30 backdrop-blur-xl" />
+                      <div className="relative w-full h-full flex items-center justify-center text-4xl">
+                        🌟
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="text-center space-y-2">
+                    <h1 className="text-2xl font-bold text-neutral-900">
+                      Profile Not Found
+                    </h1>
+                    <p className="text-sm text-neutral-600">@{username}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Content */}
+            <div className="px-4 sm:px-6 py-6 sm:py-12 space-y-8 sm:space-y-16 relative z-10">
+              <section className="space-y-4 sm:space-y-8">
+                <div className="bg-white/60 backdrop-blur-xl border border-white/20 rounded-2xl p-6 sm:p-8 shadow-glass text-center">
+                  <div className="text-6xl mb-6">🚀</div>
+                  <h2 className="text-xl font-semibold text-neutral-900 mb-4">
+                    Great Things Are Coming!
+                  </h2>
+                  <p className="text-neutral-600 mb-6 leading-relaxed">
+                    This profile is not available yet, but we&apos;re working on
+                    something amazing! Check back soon or explore other profiles
+                    on our platform.
+                  </p>
+                  <div className="space-y-3">
+                    <button
+                      onClick={() => (window.location.href = "/")}
+                      className="w-full bg-gradient-to-r from-glass-primary to-glass-secondary text-white font-medium py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                    >
+                      Explore Other Profiles
+                    </button>
+                    <button
+                      onClick={() => window.location.reload()}
+                      className="w-full bg-white/80 backdrop-blur-xl border border-white/40 text-neutral-700 font-medium py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                    >
+                      Try Again
+                    </button>
+                  </div>
+                </div>
+              </section>
+
+              {/* Footer */}
+              <section className="pb-8">
+                <Footer />
+              </section>
+            </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 
-  // Get services from API or show placeholder
-  const getServices = () => {
-    if (profileData?.services && profileData.services.length > 0) {
-      return profileData.services;
+  // Group services by categories
+  const getGroupedServices = () => {
+    if (!profileData?.services || profileData.services.length === 0) {
+      return [];
     }
 
-    // Placeholder services when none available
-    return [
-      {
-        id: "service-1",
-        name: "Service Available",
-        duration: "Contact for details",
-        price: "Contact for pricing",
-        colorClass: "color-blue",
-        availableSlots: 0,
-      },
-    ];
+    const categories = profileData.serviceCategories || [];
+    const services = profileData.services;
+
+    // Group services by category
+    const grouped = categories
+      .map((category) => {
+        const categoryServices = services
+          .filter((service) => service.categoryId === category.id)
+          .map((service) => ({
+            id: service.id,
+            name: service.name,
+            duration: `${service.duration} min`,
+            price: service.variablePrice ? "Price varies" : `$${service.price}`,
+            colorClass: "color-blue", // You can map theme colors to colorClass here
+            availableSlots: service.onlineBooking ? 5 : 0, // Mock available slots
+            description: service.description,
+            onlineBooking: service.onlineBooking,
+          }));
+
+        return {
+          category,
+          services: categoryServices,
+        };
+      })
+      .filter((group) => group.services.length > 0);
+
+    return grouped;
   };
 
-  const services = getServices();
+  const groupedServices = getGroupedServices();
 
   const handleServiceSelect = (service: ServiceData) => {
     // Track service click
@@ -210,13 +297,14 @@ export default function ProfileClient({ username }: ProfileClientProps) {
       (window as any).trackBooking();
     }
     // Show first service modal as default booking action
-    if (services.length > 0) {
+    const firstService = groupedServices[0]?.services[0];
+    if (firstService) {
       handleServiceSelect({
-        id: services[0].id,
-        name: services[0].name,
-        duration: services[0].duration,
-        price: services[0].price,
-        colorClass: services[0].colorClass,
+        id: firstService.id,
+        name: firstService.name,
+        duration: firstService.duration,
+        price: firstService.price,
+        colorClass: firstService.colorClass,
       });
     }
   };
@@ -235,7 +323,7 @@ export default function ProfileClient({ username }: ProfileClientProps) {
 
       <StructuredData
         masterData={masterData}
-        services={services}
+        services={groupedServices.flatMap((group) => group.services)}
         workingHours={formattedWorkingHours}
         profileData={profileData}
       />
@@ -277,20 +365,38 @@ export default function ProfileClient({ username }: ProfileClientProps) {
                 </p>
               </div>
 
-              <div className="space-y-3">
-                {services.length > 0 ? (
-                  services.map((service: any) => (
-                    <ServiceCard
-                      key={service.id}
-                      id={service.id}
-                      name={service.name}
-                      duration={service.duration}
-                      price={service.price}
-                      oldPrice={service.oldPrice}
-                      colorClass={service.colorClass}
-                      availableSlots={service.availableSlots || 0}
-                      onSelect={handleServiceSelect}
-                    />
+              <div className="space-y-6">
+                {groupedServices.length > 0 ? (
+                  groupedServices.map((group) => (
+                    <div key={group.category.id} className="space-y-3">
+                      {/* Category Header */}
+                      <div className="flex items-center space-x-3">
+                        <div
+                          className="w-4 h-4 rounded-full"
+                          style={{ backgroundColor: group.category.theme }}
+                        />
+                        <h3 className="text-lg font-medium text-neutral-900">
+                          {group.category.name}
+                        </h3>
+                      </div>
+
+                      {/* Services in this category */}
+                      <div className="space-y-3 ml-7">
+                        {group.services.map((service: any) => (
+                          <ServiceCard
+                            key={service.id}
+                            id={service.id}
+                            name={service.name}
+                            duration={service.duration}
+                            price={service.price}
+                            oldPrice={service.oldPrice}
+                            colorClass={service.colorClass}
+                            availableSlots={service.availableSlots || 0}
+                            onSelect={handleServiceSelect}
+                          />
+                        ))}
+                      </div>
+                    </div>
                   ))
                 ) : (
                   <div className="bg-white/60 backdrop-blur-xl border border-white/20 rounded-2xl p-6 sm:p-8 shadow-glass text-center">
@@ -299,7 +405,7 @@ export default function ProfileClient({ username }: ProfileClientProps) {
                       No Services Available
                     </h3>
                     <p className="text-sm text-neutral-600">
-                      Services are currently unavailable. Please contact us directly for assistance.
+                      Services are currently unavailable.
                     </p>
                   </div>
                 )}
@@ -328,7 +434,7 @@ export default function ProfileClient({ username }: ProfileClientProps) {
                     Portfolio Not Available
                   </h3>
                   <p className="text-sm text-neutral-600">
-                    Portfolio gallery is currently empty. Contact us to see examples of our work.
+                    Portfolio gallery is currently empty.
                   </p>
                 </div>
               )}
@@ -373,7 +479,6 @@ export default function ProfileClient({ username }: ProfileClientProps) {
             service={selectedService}
             onCall={handleCall}
           />
-
         </div>
       </div>
     </>
