@@ -62,6 +62,8 @@ export default function ProfileClient({ username }: ProfileClientProps) {
       }`.trim(),
       address: profileData.address || "",
       portfolio: profileData.portfolio || [],
+      rating: 0,
+      reviewCount: 0,
     };
   };
 
@@ -297,7 +299,7 @@ export default function ProfileClient({ username }: ProfileClientProps) {
                       Services Coming Soon
                     </h3>
                     <p className="text-sm text-neutral-600">
-                      We're preparing our service offerings. Contact us for
+                      We&apos;re preparing our service offerings. Contact us for
                       availability.
                     </p>
                   </div>
@@ -327,7 +329,7 @@ export default function ProfileClient({ username }: ProfileClientProps) {
                     Portfolio Coming Soon
                   </h3>
                   <p className="text-sm text-neutral-600">
-                    We're working on showcasing our best work. Check back soon!
+                    We&apos;re working on showcasing our best work. Check back soon!
                   </p>
                 </div>
               )}

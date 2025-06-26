@@ -9,6 +9,8 @@ export interface MasterProfile {
   portfolio: string[];
   socials: any;
   username: string;
+  address: string | null;
+  services: any[] | null;
   workingHours: {
     [key: string]: {
       end: number;

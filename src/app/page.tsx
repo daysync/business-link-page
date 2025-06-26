@@ -81,7 +81,7 @@ export default function LandingPage() {
                     </span>
                   </code>
                   <p className="text-sm text-main-primaryText/50 mt-2">
-                    Replace with any professional's username
+                    Replace with any professional&apos;s username
                   </p>
                 </div>
               </div>
