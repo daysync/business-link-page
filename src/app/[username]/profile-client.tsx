@@ -265,9 +265,9 @@ export default function ProfileClient({ username }: ProfileClientProps) {
           />
 
           {/* Content */}
-          <div className="px-6 py-12 space-y-16 relative z-10">
+          <div className="px-4 sm:px-6 py-6 sm:py-12 space-y-8 sm:space-y-16 relative z-10">
             {/* Services Section */}
-            <section id="services" className="space-y-8">
+            <section id="services" className="space-y-4 sm:space-y-8">
               <div>
                 <h2 className="text-xl font-semibold text-neutral-900 mb-2">
                   Services
@@ -293,14 +293,13 @@ export default function ProfileClient({ username }: ProfileClientProps) {
                     />
                   ))
                 ) : (
-                  <div className="bg-white/60 backdrop-blur-xl border border-white/20 rounded-2xl p-8 shadow-glass text-center">
-                    <div className="text-4xl mb-4">💼</div>
+                  <div className="bg-white/60 backdrop-blur-xl border border-white/20 rounded-2xl p-6 sm:p-8 shadow-glass text-center">
+                    <div className="text-4xl mb-4">🚀</div>
                     <h3 className="text-base font-medium text-neutral-900 mb-2">
-                      Services Coming Soon
+                      No Services Available
                     </h3>
                     <p className="text-sm text-neutral-600">
-                      We&apos;re preparing our service offerings. Contact us for
-                      availability.
+                      Services are currently unavailable. Please contact us directly for assistance.
                     </p>
                   </div>
                 )}
@@ -308,7 +307,7 @@ export default function ProfileClient({ username }: ProfileClientProps) {
             </section>
 
             {/* Portfolio Section */}
-            <section className="space-y-8">
+            <section className="space-y-4 sm:space-y-8">
               <div>
                 <h2 className="text-xl font-semibold text-neutral-900 mb-2">
                   Portfolio
@@ -323,20 +322,20 @@ export default function ProfileClient({ username }: ProfileClientProps) {
                   onImageClick={handlePortfolioImageClick}
                 />
               ) : (
-                <div className="bg-white/60 backdrop-blur-xl border border-white/20 rounded-2xl p-8 shadow-glass text-center">
-                  <div className="text-4xl mb-4">📸</div>
+                <div className="bg-white/60 backdrop-blur-xl border border-white/20 rounded-2xl p-6 sm:p-8 shadow-glass text-center">
+                  <div className="text-4xl mb-4">🎨</div>
                   <h3 className="text-base font-medium text-neutral-900 mb-2">
-                    Portfolio Coming Soon
+                    Portfolio Not Available
                   </h3>
                   <p className="text-sm text-neutral-600">
-                    We&apos;re working on showcasing our best work. Check back soon!
+                    Portfolio gallery is currently empty. Contact us to see examples of our work.
                   </p>
                 </div>
               )}
             </section>
 
             {/* Working Hours Section */}
-            <section className="space-y-8">
+            <section className="space-y-4 sm:space-y-8">
               <div>
                 <h2 className="text-xl font-semibold text-neutral-900 mb-2">
                   Working Hours

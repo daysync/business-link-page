@@ -94,7 +94,7 @@ export function Header({
         </div>
         
         {/* Main content */}
-        <div className="relative z-10 px-6 pt-20 pb-16">
+        <div className="relative z-10 px-4 sm:px-6 pt-16 sm:pt-20 pb-12 sm:pb-16">
           {/* Profile section */}
           <div className="flex flex-col items-center space-y-5">
             {/* Avatar with glass effect */}
