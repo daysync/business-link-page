@@ -6,11 +6,11 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "John Doe - Professional Service Provider | DaySync",
+  title: "DaySync - Professional Service Provider Platform",
   description:
-    "Book your appointment with John Doe, a professional service provider. View portfolio, check availability, and book directly through WhatsApp or phone.",
+    "Connect with professional service providers. View portfolios, check availability, and book appointments directly through DaySync.",
   keywords:
-    "service provider, professional services, appointment booking, John Doe, DaySync",
+    "service provider, professional services, appointment booking, daysync, portfolio",
   authors: [{ name: "DaySync" }],
   creator: "DaySync",
   publisher: "DaySync",
@@ -19,33 +19,20 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL("https://daysync.com"),
-  alternates: {
-    canonical: "/masters/john-doe",
-  },
+  metadataBase: new URL("https://daysync.pro"),
   openGraph: {
-    title: "John Doe - Professional Service Provider",
+    title: "DaySync - Professional Service Provider Platform",
     description:
-      "Book your appointment with John Doe. View portfolio and book directly through our platform.",
-    url: "/masters/john-doe",
+      "Connect with professional service providers. View portfolios and book appointments directly.",
     siteName: "DaySync",
-    images: [
-      {
-        url: "/og-john-doe.jpg",
-        width: 1200,
-        height: 630,
-        alt: "John Doe - Professional Service Provider",
-      },
-    ],
     locale: "en_US",
-    type: "profile",
+    type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "John Doe - Professional Service Provider",
+    title: "DaySync - Professional Service Provider Platform",
     description:
-      "Book your appointment with John Doe. Professional service provider with portfolio.",
-    images: ["/og-john-doe.jpg"],
+      "Connect with professional service providers. View portfolios and book appointments directly.",
   },
   robots: {
     index: true,
@@ -66,8 +53,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" className="scroll-smooth">
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#6366f1" />
+        <link rel="icon" href="/favicon.ico" />
+      </head>
+      <body className={`${inter.className} antialiased`}>
         {children}
         <SpeedInsights />
       </body>

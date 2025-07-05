@@ -24,7 +24,7 @@ export default function LandingPage() {
       <div className="relative z-10 min-h-screen flex flex-col">
         {/* Header with logo */}
         <header className="w-full py-8">
-          <div className="container mx-auto px-4 sm:px-6">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6">
             <div className="text-center">
               <Image
                 src="/daysync-logo.svg"
@@ -39,7 +39,7 @@ export default function LandingPage() {
 
         {/* Main content - centered and spacious */}
         <main className="flex-1 flex items-center justify-center py-12">
-          <div className="container mx-auto px-4 sm:px-6 max-w-5xl">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6">
             {/* Hero section with better spacing */}
             <div className="text-center space-y-8 mb-16">
               <div className="space-y-6">
@@ -50,8 +50,7 @@ export default function LandingPage() {
                   </span>
                 </h1>
                 <p className="text-xl md:text-2xl text-main-primaryText/70 leading-relaxed max-w-2xl mx-auto">
-                  Find and connect with talented beauty professionals in your
-                  area
+                  Find and connect with talented beauty professionals in your area
                 </p>
               </div>
             </div>
@@ -93,20 +92,15 @@ export default function LandingPage() {
                 <div className="text-center space-y-8">
                   <div className="space-y-4">
                     <div className="inline-flex items-center justify-center w-16 h-16 bg-main-primary/10 rounded-full mb-4">
-                      <Image
-                        src="/icon.svg"
-                        alt="DaySync Icon"
-                        width={32}
-                        height={32}
-                        className="w-16 h-16"
-                      />
+                      <div className="w-8 h-8 bg-gradient-to-r from-main-primary to-main-secondary rounded-full flex items-center justify-center">
+                        <span className="text-white font-bold text-sm">D</span>
+                      </div>
                     </div>
                     <h2 className="text-3xl md:text-4xl font-bold text-main-primaryText">
                       Beauty Professional?
                     </h2>
                     <p className="text-lg text-main-primaryText/70 max-w-2xl mx-auto leading-relaxed">
-                      Join thousands of beauty experts using DaySync to manage
-                      their business and connect with clients
+                      Join thousands of beauty experts using DaySync to manage their business and connect with clients
                     </p>
                   </div>
 
@@ -125,7 +119,7 @@ export default function LandingPage() {
 
         {/* Simple footer */}
         <footer className="py-8 border-t border-main-primaryText/5">
-          <div className="container mx-auto px-4 sm:px-6 text-center">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center">
             <p className="text-sm text-main-primaryText/50">
               Powered by{" "}
               <span className="font-semibold text-main-primary hover:text-main-accent transition-colors">

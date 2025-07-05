@@ -154,7 +154,7 @@ export default function ProfileClient({ username }: ProfileClientProps) {
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-glass-primary/5 to-glass-secondary/5 rounded-full blur-3xl" />
           </div>
 
-          <div className="max-w-lg mx-auto min-h-screen relative bg-gradient-to-b from-white/40 via-white/30 to-white/40 backdrop-blur-sm shadow-2xl">
+          <div className="max-w-4xl mx-auto min-h-screen relative bg-gradient-to-b from-white/40 via-white/30 to-white/40 backdrop-blur-sm shadow-2xl">
             {/* Header with same styling */}
             <div className="relative bg-white/40 backdrop-blur-2xl border-b border-white/20">
               <div className="absolute inset-0">
@@ -162,7 +162,28 @@ export default function ProfileClient({ username }: ProfileClientProps) {
                 <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/50 to-transparent" />
               </div>
 
-              <div className="relative z-10 px-4 sm:px-6 pt-16 sm:pt-20 pb-12 sm:pb-16">
+              <div className="relative z-10 px-4 sm:px-6 pt-6 pb-12 sm:pb-16">
+                <div className="mb-8">
+                  <nav className="flex items-center justify-between">
+                    <div className="flex items-center space-x-4">
+                      <a
+                        href="/"
+                        className="flex items-center space-x-2 text-neutral-600 hover:text-neutral-900 transition-colors duration-200"
+                      >
+                        <span className="text-sm font-medium">
+                          ← Back to Home
+                        </span>
+                      </a>
+
+                      <div className="flex items-center space-x-2">
+                        <span className="text-neutral-400">/</span>
+                        <span className="text-neutral-900 font-medium">
+                          @{username}
+                        </span>
+                      </div>
+                    </div>
+                  </nav>
+                </div>
                 <div className="flex flex-col items-center space-y-5">
                   <div className="relative">
                     <div className="absolute -inset-4 bg-gradient-to-r from-glass-primary/20 to-glass-secondary/20 rounded-full blur-2xl opacity-60" />
@@ -339,7 +360,7 @@ export default function ProfileClient({ username }: ProfileClientProps) {
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-glass-primary/5 to-glass-secondary/5 rounded-full blur-3xl" />
         </div>
 
-        <div className="max-w-lg mx-auto min-h-screen relative bg-gradient-to-b from-white/40 via-white/30 to-white/40 backdrop-blur-sm shadow-2xl">
+        <div className="max-w-4xl mx-auto min-h-screen relative bg-gradient-to-b from-white/40 via-white/30 to-white/40 backdrop-blur-sm shadow-2xl">
           {/* Header */}
           <Header
             name={masterData.name}
@@ -349,7 +370,7 @@ export default function ProfileClient({ username }: ProfileClientProps) {
             address={masterData.address}
             workingHours={profileData?.workingHours}
             isOnline={true}
-            avatar={profileData?.avatar}
+            avatar={profileData?.avatar || ""}
           />
 
           {/* Content */}
