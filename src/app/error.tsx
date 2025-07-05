@@ -53,7 +53,7 @@ export default function Error({ error, reset }: ErrorProps) {
                 Something went wrong
               </h1>
               <p className="text-xl text-main-primaryText/70 leading-relaxed max-w-md mx-auto">
-                An unexpected error occurred. Please try again or contact support if the problem persists.
+                An unexpected error occurred
               </p>
             </div>
             
@@ -77,7 +77,7 @@ export default function Error({ error, reset }: ErrorProps) {
               {process.env.NODE_ENV === 'development' && (
                 <details className="mt-8 text-left max-w-lg mx-auto">
                   <summary className="text-main-primaryText/60 cursor-pointer hover:text-main-primaryText/80 transition-colors text-sm">
-                    Error Details (Development Only)
+                    Error Details
                   </summary>
                   <pre className="mt-4 p-4 bg-main-primaryText/5 rounded-2xl text-sm text-main-primaryText/80 overflow-auto border border-main-primaryText/10">
                     {error.message}
@@ -92,11 +92,7 @@ export default function Error({ error, reset }: ErrorProps) {
         <footer className="py-8 border-t border-main-primaryText/5">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center">
             <p className="text-sm text-main-primaryText/50">
-              Powered by{" "}
-              <span className="font-semibold text-main-primary hover:text-main-accent transition-colors">
-                DaySync
-              </span>{" "}
-              - Professional beauty management platform
+              Powered by DaySync
             </p>
           </div>
         </footer>

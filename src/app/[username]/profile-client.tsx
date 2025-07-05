@@ -12,6 +12,7 @@ import {
   StructuredData,
   WorkingHours,
 } from "@/components";
+import { trackProfileView, trackContactClick, trackServiceView } from "@/lib/analytics";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 
@@ -34,6 +35,13 @@ export default function ProfileClient({ username }: ProfileClientProps) {
       try {
         const data = await getProfile(username);
         setProfileData(data);
+        
+        // Track profile view after successful data load
+        trackProfileView(username, {
+          profileType: data.type || 'beauty_master',
+          hasPortfolio: data.portfolio && data.portfolio.length > 0,
+          servicesCount: data.services?.length || 0,
+        });
       } catch (err) {
         if (err instanceof ApiError) {
           setError(`Failed to load profile: ${err.message}`);
@@ -56,11 +64,12 @@ export default function ProfileClient({ username }: ProfileClientProps) {
     return {
       name: profileData.name || "Professional",
       title: profileData.description || "Service Provider",
-      location: profileData.countryCode || "Location",
+      location: profileData.address || profileData.countryCode || "Location",
       phone: `+${profileData.phoneCode || ""} ${
         profileData.phoneNumber || "Contact for details"
       }`.trim(),
       address: profileData.address || "",
+      fullAddress: `${profileData.address || ''} ${profileData.countryCode || ''}`.trim() || 'Location',
       portfolio: profileData.portfolio || [],
       rating: 0,
       reviewCount: 0,
@@ -365,12 +374,13 @@ export default function ProfileClient({ username }: ProfileClientProps) {
           <Header
             name={masterData.name}
             title={masterData.title}
-            location={masterData.location}
+            location={masterData.fullAddress}
             phone={masterData.phone}
             address={masterData.address}
             workingHours={profileData?.workingHours}
             isOnline={true}
             avatar={profileData?.avatar || ""}
+            username={username}
           />
 
           {/* Content */}

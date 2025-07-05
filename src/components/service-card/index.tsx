@@ -40,32 +40,37 @@ export function ServiceCard({
       onClick={handleClick}
       className="group w-full text-left"
     >
-      <div className="relative bg-white/70 backdrop-blur-xl border border-white/20 rounded-2xl p-5 shadow-glass hover:shadow-glass-hover transition-all duration-500 hover:scale-[1.01] hover:bg-white/80">
+      <div className="relative bg-white/70 backdrop-blur-xl border border-white/20 rounded-2xl p-4 sm:p-5 shadow-glass hover:shadow-glass-hover transition-all duration-500 hover:scale-[1.01] hover:bg-white/80">
         {/* Content */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-0">
           {/* Service info */}
-          <div className="flex-1 space-y-1">
-            <h3 className="text-base font-medium text-neutral-900 group-hover:text-glass-primary transition-colors">
-              {name}
-            </h3>
-            
-            <div className="flex items-center gap-4 text-sm text-neutral-600">
-              <div className="flex items-center gap-1.5">
-                <Clock size={14} className="text-neutral-400" />
-                <span>{duration}</span>
-              </div>
+          <div className="flex-1 space-y-2">
+            <div className="flex items-start justify-between sm:block">
+              <h3 className="text-base font-medium text-neutral-900 group-hover:text-glass-primary transition-colors flex-1 pr-2 sm:pr-0">
+                {name}
+              </h3>
               
-              {availableSlots && availableSlots > 0 && (
-                <div className="flex items-center gap-1">
-                  <div className="w-1.5 h-1.5 bg-glass-tertiary rounded-full" />
-                  <span className="text-glass-tertiary font-medium">{availableSlots} slots</span>
+              {/* Price on mobile - top right */}
+              <div className="text-right sm:hidden">
+                <div className="text-lg font-semibold text-neutral-900">
+                  {price}
                 </div>
-              )}
+                {oldPrice && (
+                  <div className="text-xs text-neutral-400 line-through">
+                    {oldPrice}
+                  </div>
+                )}
+              </div>
+            </div>
+            
+            <div className="flex items-center gap-1.5 text-sm text-neutral-600">
+              <Clock size={14} className="text-neutral-400" />
+              <span>{duration}</span>
             </div>
           </div>
           
-          {/* Price and action */}
-          <div className="flex items-center gap-4">
+          {/* Price and action - desktop only */}
+          <div className="hidden sm:flex items-center gap-4">
             <div className="text-right">
               <div className="text-lg font-semibold text-neutral-900">
                 {price}

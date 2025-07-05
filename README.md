@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# DaySync Business Link Page
+
+A Next.js application for displaying professional service provider profiles with clean, Linktree-style design and analytics tracking.
+
+## Project Scope
+
+This project is focused on two main functions:
+1. **Profile Viewing** - Display beautiful, responsive profile pages for beauty masters and service providers
+2. **Analytics Tracking** - Track profile views and user interactions for business insights
+
+**What this project does:**
+- ✅ Display professional profiles at `daysync.pro/username`
+- ✅ Track page views, contact clicks, and user interactions
+- ✅ Responsive, mobile-first design with glass morphism effects
+- ✅ SEO optimized with structured data
+
+**What this project does NOT do:**
+- ❌ Profile management/editing (use separate admin dashboard)
+- ❌ Display private analytics data (use separate admin tools)
+- ❌ User authentication (all endpoints are public)
+
+## Environment Setup
+
+Copy `.env.example` to `.env.local` and configure:
+
+### Required Variables
+
+```bash
+# Your main DaySync API server URL
+DAYSYNC_API_BASE_URL=https://api.daysync.pro
+
+# Default username for development/testing
+NEXT_PUBLIC_MASTER_USERNAME=john-doe
+```
+
+### Optional Variables
+
+```bash
+# Disable analytics tracking if needed
+ENABLE_ANALYTICS=false
+```
+
+## API Endpoints
+
+This project provides these public endpoints:
+
+- `GET /api/profile/[username]` - Fetch public profile data
+- `POST /api/analytics/track` - Track user interactions
+
+Both endpoints require no authentication and work with your backend's public APIs.
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+# Install dependencies
+npm install
+
+# Start development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Build for production
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to see the landing page.
+Visit [http://localhost:3000/your-username](http://localhost:3000/your-username) to see a profile page.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Backend API Requirements
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Your backend should provide these public endpoints:
 
-## Learn More
+```bash
+# Profile data (no auth required)
+GET /public/profiles/{username}
 
-To learn more about Next.js, take a look at the following resources:
+# Analytics tracking (no auth required)  
+POST /public/analytics/track
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Deploy to Vercel, Netlify, or any Next.js hosting platform. Make sure to set your environment variables in the hosting platform's settings.
 
-## Deploy on Vercel
+## Architecture
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- **Frontend**: Next.js 15 with App Router
+- **Styling**: Tailwind CSS with custom glass morphism design
+- **Analytics**: Client-side tracking with server-side forwarding
+- **Caching**: Built-in Next.js caching (5-minute profile cache)
+- **No Database**: All data comes from your existing DaySync API

@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import { trackContactClick } from '@/lib/analytics';
 
 interface HeaderProps {
   name: string;
@@ -10,6 +11,7 @@ interface HeaderProps {
   workingHours?: any;
   isOnline?: boolean;
   avatar?: string;
+  username?: string; // Add username for analytics tracking
 }
 
 export default function Header({
@@ -19,8 +21,34 @@ export default function Header({
   phone,
   address,
   isOnline = false,
-  avatar
+  avatar,
+  username
 }: HeaderProps) {
+  
+  const handleContactClick = async (contactType: 'call' | 'message') => {
+    if (username) {
+      await trackContactClick(username, contactType, {
+        profileName: name,
+        phone: phone,
+      });
+    }
+  };
+
+  const handleAddressClick = () => {
+    if (!address && !location) return;
+    
+    const addressQuery = encodeURIComponent(address || location);
+    const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
+    
+    // Detect iOS device
+    if (/iPad|iPhone|iPod/.test(userAgent) && !(window as any).MSStream) {
+      // Open Apple Maps on iOS
+      window.open(`maps://maps.apple.com/?q=${addressQuery}`, '_blank');
+    } else {
+      // Open Google Maps on other devices
+      window.open(`https://maps.google.com/maps?q=${addressQuery}`, '_blank');
+    }
+  };
   return (
     <div className="relative bg-white/40 backdrop-blur-2xl border-b border-white/20">
       <div className="absolute inset-0">
@@ -55,24 +83,39 @@ export default function Header({
           <div className="text-center space-y-2">
             <h1 className="text-2xl font-bold text-neutral-900">{name}</h1>
             <p className="text-sm text-neutral-600">{title}</p>
-            {location && (
+            {phone && (
               <div className="flex items-center justify-center space-x-1 text-xs text-neutral-500">
-                <span>📍</span>
-                <span>{location}</span>
+                <span>📞</span>
+                <span>{phone}</span>
               </div>
+            )}
+            {location && (
+              <button 
+                onClick={handleAddressClick}
+                className="flex items-center justify-center space-x-1 text-xs text-neutral-500 hover:text-neutral-700 transition-colors duration-200 cursor-pointer group max-w-full px-2"
+              >
+                <span className="group-hover:scale-110 transition-transform duration-200 flex-shrink-0">📍</span>
+                <span className="underline decoration-dotted underline-offset-2 hover:decoration-solid truncate text-center leading-relaxed">{location}</span>
+              </button>
             )}
           </div>
 
-          <div className="flex space-x-3 w-full max-w-xs">
+          <div className="flex flex-col space-y-3 w-full max-w-xs">
             <button
-              onClick={() => window.location.href = `tel:${phone}`}
-              className="flex-1 bg-gradient-to-r from-glass-primary to-glass-secondary text-white font-medium py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+              onClick={async () => {
+                await handleContactClick('call');
+                window.location.href = `tel:${phone}`;
+              }}
+              className="w-full bg-gradient-to-r from-glass-primary to-glass-secondary text-white font-medium py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
             >
               📞 Call
             </button>
             <button
-              onClick={() => window.location.href = `sms:${phone}`}
-              className="flex-1 bg-white/80 backdrop-blur-xl border border-white/40 text-neutral-700 font-medium py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+              onClick={async () => {
+                await handleContactClick('message');
+                window.location.href = `sms:${phone}`;
+              }}
+              className="w-full bg-white/80 backdrop-blur-xl border border-white/40 text-neutral-700 font-medium py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
             >
               💬 Message
             </button>

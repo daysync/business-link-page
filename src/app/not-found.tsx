@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 
 export default function NotFound() {
@@ -41,7 +43,7 @@ export default function NotFound() {
                 Page Not Found
               </h1>
               <p className="text-xl text-main-primaryText/70 leading-relaxed max-w-md mx-auto">
-                The page you're looking for doesn't exist or has been moved.
+                The page you&apos;re looking for doesn&apos;t exist
               </p>
             </div>
             
@@ -54,7 +56,7 @@ export default function NotFound() {
               </a>
               
               <div className="text-sm text-main-primaryText/50">
-                Or visit our main page to discover beauty professionals
+                Discover beauty professionals at daysync.pro/username
               </div>
             </div>
           </div>
@@ -64,11 +66,7 @@ export default function NotFound() {
         <footer className="py-8 border-t border-main-primaryText/5">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center">
             <p className="text-sm text-main-primaryText/50">
-              Powered by{" "}
-              <span className="font-semibold text-main-primary hover:text-main-accent transition-colors">
-                DaySync
-              </span>{" "}
-              - Professional beauty management platform
+              Powered by DaySync
             </p>
           </div>
         </footer>
