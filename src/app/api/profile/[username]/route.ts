@@ -53,7 +53,9 @@ export async function GET(
     }
 
     // Get API configuration from environment variables
-    const API_BASE_URL = process.env.DAYSYNC_API_BASE_URL;
+    const API_BASE_URL =
+      process.env.DAYSYNC_API_BASE_URL ||
+      "https://daysync-business-prod.onrender.com/v1";
 
     console.log(API_BASE_URL, " - API_BASE_URL");
     if (!API_BASE_URL) {
