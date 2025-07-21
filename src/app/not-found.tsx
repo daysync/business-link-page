@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function NotFound() {
   return (
@@ -21,7 +22,7 @@ export default function NotFound() {
         <header className="w-full py-8">
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
             <div className="text-center">
-              <a href="/" className="inline-block">
+              <Link href="/" className="inline-block">
                 <Image
                   src="/daysync-logo.svg"
                   alt="DaySync"
@@ -29,7 +30,7 @@ export default function NotFound() {
                   height={40}
                   className="h-10 w-auto mx-auto transition-transform hover:scale-105 duration-300"
                 />
-              </a>
+              </Link>
             </div>
           </div>
         </header>
@@ -48,12 +49,12 @@ export default function NotFound() {
             </div>
             
             <div className="space-y-4">
-              <a 
+              <Link 
                 href="/"
                 className="inline-flex items-center justify-center px-8 py-3 glass-button-primary text-white font-medium rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
               >
                 Go Home
-              </a>
+              </Link>
               
               <div className="text-sm text-main-primaryText/50">
                 Discover beauty professionals at daysync.pro/username

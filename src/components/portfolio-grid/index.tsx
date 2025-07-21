@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
+import Image from 'next/image';
 
 interface PortfolioGridProps {
   images?: string[];
@@ -25,17 +26,17 @@ export function PortfolioGrid({ images = [], onImageClick }: PortfolioGridProps)
     setSelectedImage(null);
   };
 
-  const goToPrevious = () => {
+  const goToPrevious = useCallback(() => {
     if (selectedImage !== null && selectedImage > 0 && portfolioItems[selectedImage - 1]) {
       setSelectedImage(selectedImage - 1);
     }
-  };
+  }, [selectedImage, portfolioItems]);
 
-  const goToNext = () => {
+  const goToNext = useCallback(() => {
     if (selectedImage !== null && selectedImage < portfolioItems.length - 1 && portfolioItems[selectedImage + 1]) {
       setSelectedImage(selectedImage + 1);
     }
-  };
+  }, [selectedImage, portfolioItems]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -53,7 +54,7 @@ export function PortfolioGrid({ images = [], onImageClick }: PortfolioGridProps)
 
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [selectedImage]);
+  }, [selectedImage, goToPrevious, goToNext]);
 
   // Prevent body scroll when modal is open
   useEffect(() => {
@@ -79,10 +80,11 @@ export function PortfolioGrid({ images = [], onImageClick }: PortfolioGridProps)
             className="relative aspect-square rounded-2xl overflow-hidden bg-white/70 backdrop-blur-xl border border-white/20 shadow-glass hover:shadow-glass-hover transition-all duration-500 hover:scale-[1.02]"
           >
             {image ? (
-              <img 
+              <Image 
                 src={image} 
                 alt={`Portfolio ${index + 1}`}
-                className="w-full h-full object-cover"
+                fill
+                className="object-cover"
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center text-neutral-300">
@@ -137,9 +139,11 @@ export function PortfolioGrid({ images = [], onImageClick }: PortfolioGridProps)
             )}
 
             {/* Image */}
-            <img
+            <Image
               src={portfolioItems[selectedImage]!}
               alt={`Portfolio ${selectedImage + 1}`}
+              width={800}
+              height={600}
               className="max-w-full max-h-full object-contain rounded-xl"
             />
           </div>

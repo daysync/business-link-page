@@ -5,6 +5,7 @@ export * from "./portfolio-grid";
 export * from "./service-card";
 export * from "./service-modal";
 export * from "./skeleton";
+export * from "./sticky-nav";
 export * from "./structured-data";
 export * from "./working-hours";
 export { default as Header } from "./header";

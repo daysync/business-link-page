@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface ErrorProps {
   error: Error & { digest?: string };
@@ -31,7 +32,7 @@ export default function Error({ error, reset }: ErrorProps) {
         <header className="w-full py-8">
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
             <div className="text-center">
-              <a href="/" className="inline-block">
+              <Link href="/" className="inline-block">
                 <Image
                   src="/daysync-logo.svg"
                   alt="DaySync"
@@ -39,7 +40,7 @@ export default function Error({ error, reset }: ErrorProps) {
                   height={40}
                   className="h-10 w-auto mx-auto transition-transform hover:scale-105 duration-300"
                 />
-              </a>
+              </Link>
             </div>
           </div>
         </header>

@@ -14,6 +14,7 @@ import {
 } from "@/components";
 import { trackProfileView, trackContactClick, trackServiceView } from "@/lib/analytics";
 import Head from "next/head";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 interface ProfileClientProps {
@@ -38,7 +39,7 @@ export default function ProfileClient({ username }: ProfileClientProps) {
         
         // Track profile view after successful data load
         trackProfileView(username, {
-          profileType: data.type || 'beauty_master',
+          profileType: 'beauty_master',
           hasPortfolio: data.portfolio && data.portfolio.length > 0,
           servicesCount: data.services?.length || 0,
         });
@@ -175,14 +176,14 @@ export default function ProfileClient({ username }: ProfileClientProps) {
                 <div className="mb-8">
                   <nav className="flex items-center justify-between">
                     <div className="flex items-center space-x-4">
-                      <a
+                      <Link
                         href="/"
                         className="flex items-center space-x-2 text-neutral-600 hover:text-neutral-900 transition-colors duration-200"
                       >
                         <span className="text-sm font-medium">
                           ← Back to Home
                         </span>
-                      </a>
+                      </Link>
 
                       <div className="flex items-center space-x-2">
                         <span className="text-neutral-400">/</span>
@@ -343,6 +344,7 @@ export default function ProfileClient({ username }: ProfileClientProps) {
     console.log("Portfolio image clicked:", index);
   };
 
+
   return (
     <>
       <Head>
@@ -378,7 +380,7 @@ export default function ProfileClient({ username }: ProfileClientProps) {
             phone={masterData.phone}
             address={masterData.address}
             workingHours={profileData?.workingHours}
-            isOnline={true}
+            isOnline={false}
             avatar={profileData?.avatar || ""}
             username={username}
           />
@@ -444,7 +446,7 @@ export default function ProfileClient({ username }: ProfileClientProps) {
             </section>
 
             {/* Portfolio Section */}
-            <section className="space-y-4 sm:space-y-8">
+            <section id="portfolio" className="space-y-4 sm:space-y-8">
               <div>
                 <h2 className="text-xl font-semibold text-neutral-900 mb-2">
                   Portfolio
@@ -472,7 +474,7 @@ export default function ProfileClient({ username }: ProfileClientProps) {
             </section>
 
             {/* Working Hours Section */}
-            <section className="space-y-4 sm:space-y-8">
+            <section id="hours" className="space-y-4 sm:space-y-8">
               <div>
                 <h2 className="text-xl font-semibold text-neutral-900 mb-2">
                   Working Hours
