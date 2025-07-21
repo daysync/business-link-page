@@ -53,18 +53,16 @@ export async function GET(
     }
 
     // Get API configuration from environment variables
-    const API_BASE_URL =
-      process.env.DAYSYNC_API_BASE_URL ||
-      "https://daysync-business-prod.onrender.com/v1";
+    const API_BASE_URL = "https://daysync-business-prod.onrender.com/v1";
+    // process.env.DAYSYNC_API_BASE_URL ||
 
-    console.log(API_BASE_URL, " - API_BASE_URL");
-    if (!API_BASE_URL) {
-      console.error("DAYSYNC_API_BASE_URL environment variable is not set");
-      return NextResponse.json(
-        { error: "API configuration error" },
-        { status: 500 }
-      );
-    }
+    // if (!API_BASE_URL) {
+    //   console.error("DAYSYNC_API_BASE_URL environment variable is not set");
+    //   return NextResponse.json(
+    //     { error: "API configuration error" },
+    //     { status: 500 }
+    //   );
+    // }
 
     console.log(`${API_BASE_URL}/public/${username}`);
 

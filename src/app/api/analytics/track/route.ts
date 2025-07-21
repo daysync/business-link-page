@@ -53,9 +53,8 @@ export async function POST(request: NextRequest) {
     };
 
     // Send to your backend/database
-    const API_BASE_URL =
-      process.env.DAYSYNC_API_BASE_URL ||
-      "https://daysync-business-prod.onrender.com/v1";
+    const API_BASE_URL = "https://daysync-business-prod.onrender.com/v1";
+    // process.env.DAYSYNC_API_BASE_URL ||
 
     if (API_BASE_URL) {
       try {
