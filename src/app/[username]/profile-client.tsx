@@ -274,7 +274,7 @@ export default function ProfileClient({ username }: ProfileClientProps) {
             id: service.id,
             name: service.name,
             duration: `${service.duration} min`,
-            price: service.variablePrice ? "Price varies" : `$${service.price}`,
+            price: service.variablePrice ? "Price varies" : `${service.price} ${profileData.profileSettings?.currency || 'USD'}`,
             colorClass: "color-blue", // You can map theme colors to colorClass here
             availableSlots: service.onlineBooking ? 5 : 0, // Mock available slots
             description: service.description,
