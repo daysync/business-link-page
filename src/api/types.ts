@@ -42,6 +42,9 @@ export interface MasterProfile {
       closed: boolean;
     };
   };
+  profileSettings?: {
+    currency: string;
+  };
   createdAt: string;
   updatedAt: string;
 }
