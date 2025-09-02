@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { trackContactClick } from '@/lib/analytics';
+import { Instagram, Facebook, Twitter, Linkedin, Globe, Calendar } from 'lucide-react';
 
 interface HeaderProps {
   name: string;
@@ -11,7 +12,9 @@ interface HeaderProps {
   workingHours?: any;
   isOnline?: boolean;
   avatar?: string;
-  username?: string; // Add username for analytics tracking
+  username?: string;
+  socials?: any;
+  createdAt?: string;
 }
 
 export default function Header({
@@ -22,7 +25,9 @@ export default function Header({
   address,
   isOnline = false,
   avatar,
-  username
+  username,
+  socials,
+  createdAt
 }: HeaderProps) {
   
   const handleContactClick = async (contactType: 'call' | 'message') => {
@@ -49,6 +54,36 @@ export default function Header({
       window.open(`https://maps.google.com/maps?q=${addressQuery}`, '_blank');
     }
   };
+
+  const formatMemberSince = (dateString: string) => {
+    try {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'long' 
+      });
+    } catch {
+      return '';
+    }
+  };
+
+  const getSocialIcon = (platform: string) => {
+    const iconProps = { size: 18, className: "text-neutral-600 group-hover:text-glass-primary transition-colors" };
+    
+    switch (platform.toLowerCase()) {
+      case 'instagram':
+        return <Instagram {...iconProps} />;
+      case 'facebook':
+        return <Facebook {...iconProps} />;
+      case 'twitter':
+        return <Twitter {...iconProps} />;
+      case 'linkedin':
+        return <Linkedin {...iconProps} />;
+      default:
+        return <Globe {...iconProps} />;
+    }
+  };
+
   return (
     <div className="relative bg-white/40 backdrop-blur-2xl border-b border-white/20">
       <div className="absolute inset-0">
@@ -83,12 +118,14 @@ export default function Header({
           <div className="text-center space-y-2">
             <h1 className="text-2xl font-bold text-neutral-900">{name}</h1>
             <p className="text-sm text-neutral-600">{title}</p>
+            
             {phone && (
               <div className="flex items-center justify-center space-x-1 text-xs text-neutral-500">
                 <span>📞</span>
                 <span>{phone}</span>
               </div>
             )}
+            
             {location && (
               <button 
                 onClick={handleAddressClick}
@@ -97,6 +134,33 @@ export default function Header({
                 <span className="group-hover:scale-110 transition-transform duration-200 flex-shrink-0">📍</span>
                 <span className="underline decoration-dotted underline-offset-2 hover:decoration-solid truncate text-center leading-relaxed">{location}</span>
               </button>
+            )}
+
+            {createdAt && (
+              <div className="flex items-center justify-center space-x-1 text-xs text-neutral-400">
+                <Calendar size={12} />
+                <span>Member since {formatMemberSince(createdAt)}</span>
+              </div>
+            )}
+
+            {/* Social Media Links */}
+            {socials && Object.keys(socials).length > 0 && (
+              <div className="flex items-center justify-center gap-3 pt-2">
+                {Object.entries(socials).map(([platform, url]) => {
+                  if (!url || typeof url !== 'string') return null;
+                  return (
+                    <a
+                      key={platform}
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group w-8 h-8 bg-white/60 backdrop-blur-xl border border-white/20 rounded-full flex items-center justify-center shadow-glass hover:shadow-glass-hover transition-all duration-300 hover:scale-110"
+                    >
+                      {getSocialIcon(platform)}
+                    </a>
+                  );
+                })}
+              </div>
             )}
           </div>
 

@@ -2,6 +2,7 @@
 
 import { ApiError, getProfile, MasterProfile } from "@/api";
 import {
+  FloatingActionButton,
   Footer,
   Header,
   PageSkeleton,
@@ -279,6 +280,8 @@ export default function ProfileClient({ username }: ProfileClientProps) {
             availableSlots: service.onlineBooking ? 5 : 0, // Mock available slots
             description: service.description,
             onlineBooking: service.onlineBooking,
+            variablePrice: service.variablePrice,
+            priceType: service.priceType,
           }));
 
         return {
@@ -383,6 +386,8 @@ export default function ProfileClient({ username }: ProfileClientProps) {
             isOnline={false}
             avatar={profileData?.avatar || ""}
             username={username}
+            socials={profileData?.socials}
+            createdAt={profileData?.createdAt}
           />
 
           {/* Content */}
@@ -425,6 +430,10 @@ export default function ProfileClient({ username }: ProfileClientProps) {
                             oldPrice={service.oldPrice}
                             colorClass={service.colorClass}
                             availableSlots={service.availableSlots || 0}
+                            description={service.description}
+                            variablePrice={service.variablePrice}
+                            onlineBooking={service.onlineBooking}
+                            priceType={service.priceType}
                             onSelect={handleServiceSelect}
                           />
                         ))}
@@ -514,6 +523,13 @@ export default function ProfileClient({ username }: ProfileClientProps) {
         onClose={() => setIsServiceModalOpen(false)}
         service={selectedService}
         onCall={handleCall}
+      />
+
+      {/* Floating Action Button */}
+      <FloatingActionButton
+        onCall={handleCall}
+        onMessage={handleMessage}
+        onBook={handleBookService}
       />
     </>
   );

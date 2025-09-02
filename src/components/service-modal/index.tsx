@@ -1,6 +1,6 @@
 'use client';
 
-import { X, Phone } from 'lucide-react';
+import { X, Phone, Calendar, Clock, Info } from 'lucide-react';
 import { ServiceData } from '../service-card';
 
 interface ServiceModalProps {
@@ -31,13 +31,37 @@ export function ServiceModal({ isOpen, onClose, service, onCall }: ServiceModalP
         
         {/* Service details */}
         <div className="bg-glass-primary/5 border border-glass-primary/10 rounded-2xl p-5 mb-6">
-          <h3 className="text-base font-medium text-neutral-900 mb-3">
-            {service.name}
-          </h3>
+          <div className="flex items-start justify-between mb-3">
+            <h3 className="text-base font-medium text-neutral-900 flex-1">
+              {service.name}
+            </h3>
+            <div className="flex items-center gap-2">
+              {service.onlineBooking && (
+                <span className="inline-flex items-center gap-1 px-2 py-1 bg-green-50 text-green-700 text-xs rounded-full border border-green-200">
+                  <Calendar size={10} />
+                  Online Booking
+                </span>
+              )}
+              {service.variablePrice && (
+                <span className="inline-flex items-center gap-1 px-2 py-1 bg-amber-50 text-amber-700 text-xs rounded-full border border-amber-200">
+                  <Info size={10} />
+                  Variable Price
+                </span>
+              )}
+            </div>
+          </div>
+
+          {service.description && (
+            <p className="text-sm text-neutral-700 mb-4 leading-relaxed">
+              {service.description}
+            </p>
+          )}
+
           <div className="flex justify-between items-center">
-            <span className="text-sm text-neutral-600">
-              Duration: {service.duration}
-            </span>
+            <div className="flex items-center gap-1 text-sm text-neutral-600">
+              <Clock size={14} />
+              <span>Duration: {service.duration}</span>
+            </div>
             <span className="text-lg font-semibold text-glass-primary">
               {service.price}
             </span>
@@ -46,16 +70,41 @@ export function ServiceModal({ isOpen, onClose, service, onCall }: ServiceModalP
 
         {/* Actions */}
         <div className="space-y-3">
-          <button 
-            onClick={onCall}
-            className="w-full bg-glass-primary hover:bg-glass-secondary text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-2"
-          >
-            <Phone size={18} />
-            <span>Call to Book</span>
-          </button>
+          {service.onlineBooking ? (
+            <>
+              <button 
+                onClick={() => {
+                  // This would open online booking system in the future
+                  alert('Online booking system coming soon! Please call for now.');
+                }}
+                className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-2"
+              >
+                <Calendar size={18} />
+                <span>Book Online</span>
+              </button>
+              
+              <button 
+                onClick={onCall}
+                className="w-full bg-white/80 backdrop-blur-xl border border-white/40 text-neutral-700 font-medium py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2"
+              >
+                <Phone size={16} />
+                <span>Or Call to Book</span>
+              </button>
+            </>
+          ) : (
+            <button 
+              onClick={onCall}
+              className="w-full bg-glass-primary hover:bg-glass-secondary text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-2"
+            >
+              <Phone size={18} />
+              <span>Call to Book</span>
+            </button>
+          )}
           
           <p className="text-xs text-neutral-500 text-center mt-4">
-            Online booking coming soon. Call us to schedule your appointment.
+            {service.onlineBooking 
+              ? "Book online or call us directly to schedule your appointment." 
+              : "Call us to schedule your appointment."}
           </p>
         </div>
       </div>
