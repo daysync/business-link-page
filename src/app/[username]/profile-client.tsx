@@ -420,7 +420,7 @@ export default function ProfileClient({ username }: ProfileClientProps) {
 
                       {/* Services in this category */}
                       <div className="space-y-3 ml-7">
-                        {group.services.map((service: any) => (
+                        {group.services.map((service: any, serviceIndex: number) => (
                           <ServiceCard
                             key={service.id}
                             id={service.id}
@@ -434,6 +434,7 @@ export default function ProfileClient({ username }: ProfileClientProps) {
                             variablePrice={service.variablePrice}
                             onlineBooking={service.onlineBooking}
                             priceType={service.priceType}
+                            index={serviceIndex}
                             onSelect={handleServiceSelect}
                           />
                         ))}

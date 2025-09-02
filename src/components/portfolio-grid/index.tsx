@@ -11,9 +11,14 @@ interface PortfolioGridProps {
 
 export function PortfolioGrid({ images = [], onImageClick }: PortfolioGridProps) {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
+  const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set());
   const modalRef = useRef<HTMLDivElement>(null);
 
   const portfolioItems = Array.from({ length: 6 }, (_, i) => images[i] || null);
+
+  const handleImageLoad = (index: number) => {
+    setLoadedImages(prev => new Set([...prev, index]));
+  };
 
   const handleImageClick = (index: number) => {
     if (portfolioItems[index]) {
@@ -77,17 +82,39 @@ export function PortfolioGrid({ images = [], onImageClick }: PortfolioGridProps)
           <button
             key={index}
             onClick={() => handleImageClick(index)}
-            className="relative aspect-square rounded-2xl overflow-hidden bg-white/70 backdrop-blur-xl border border-white/20 shadow-glass hover:shadow-glass-hover transition-all duration-500 hover:scale-[1.02]"
+            className="relative aspect-square rounded-2xl overflow-hidden bg-white/70 backdrop-blur-xl border border-white/20 shadow-glass hover:shadow-glass-hover transition-all duration-500 hover:scale-[1.02] group"
+            style={{ 
+              animationDelay: `${index * 100}ms`,
+              opacity: image ? (loadedImages.has(index) ? 1 : 0) : 1,
+              transition: 'all 0.6s ease-out'
+            }}
           >
             {image ? (
-              <Image 
-                src={image} 
-                alt={`Portfolio ${index + 1}`}
-                fill
-                className="object-cover"
-              />
+              <>
+                {/* Loading skeleton */}
+                <div className={`absolute inset-0 bg-gradient-to-r from-neutral-200 via-neutral-100 to-neutral-200 bg-[length:200%_100%] animate-shimmer ${
+                  loadedImages.has(index) ? 'opacity-0' : 'opacity-100'
+                } transition-opacity duration-500`} />
+                
+                {/* Actual image */}
+                <Image 
+                  src={image} 
+                  alt={`Portfolio ${index + 1}`}
+                  fill
+                  className={`object-cover transition-all duration-700 ${
+                    loadedImages.has(index) 
+                      ? 'opacity-100 scale-100' 
+                      : 'opacity-0 scale-105'
+                  } group-hover:scale-110`}
+                  onLoad={() => handleImageLoad(index)}
+                  priority={index < 3} // Load first 3 images with priority
+                />
+
+                {/* Hover overlay */}
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+              </>
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-neutral-300">
+              <div className="w-full h-full flex items-center justify-center text-neutral-300 transition-all duration-300 group-hover:text-neutral-400">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
                   <circle cx="8.5" cy="8.5" r="1.5"/>

@@ -1,6 +1,7 @@
 'use client';
 
 import { Clock, ChevronRight, Info, Star, Zap } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 interface ServiceCardProps {
   id: string;
@@ -14,6 +15,7 @@ interface ServiceCardProps {
   variablePrice?: boolean;
   onlineBooking?: boolean;
   priceType?: string;
+  index?: number;
   onSelect: (service: ServiceData) => void;
 }
 
@@ -41,8 +43,19 @@ export function ServiceCard({
   variablePrice,
   onlineBooking,
   priceType,
+  index = 0,
   onSelect 
 }: ServiceCardProps) {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, index * 100); // Stagger by 100ms per card
+
+    return () => clearTimeout(timer);
+  }, [index]);
+
   const handleClick = () => {
     onSelect({ 
       id, 
@@ -60,7 +73,11 @@ export function ServiceCard({
   return (
     <button
       onClick={handleClick}
-      className="group w-full text-left"
+      className={`group w-full text-left transition-all duration-700 ${
+        isVisible 
+          ? 'opacity-100 translate-y-0' 
+          : 'opacity-0 translate-y-4'
+      }`}
     >
       <div className="relative bg-white/70 backdrop-blur-xl border border-white/20 rounded-2xl p-4 sm:p-5 shadow-glass hover:shadow-glass-hover transition-all duration-500 hover:scale-[1.01] hover:bg-white/80">
         {/* Service type indicators */}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { trackContactClick } from '@/lib/analytics';
 import { Instagram, Facebook, Twitter, Linkedin, Globe, Calendar } from 'lucide-react';
@@ -29,6 +29,8 @@ export default function Header({
   socials,
   createdAt
 }: HeaderProps) {
+  const [isCallLoading, setIsCallLoading] = useState(false);
+  const [isMessageLoading, setIsMessageLoading] = useState(false);
   
   const handleContactClick = async (contactType: 'call' | 'message') => {
     if (username) {
@@ -167,21 +169,55 @@ export default function Header({
           <div className="flex flex-col space-y-3 w-full max-w-xs">
             <button
               onClick={async () => {
-                await handleContactClick('call');
-                window.location.href = `tel:${phone}`;
+                setIsCallLoading(true);
+                try {
+                  await handleContactClick('call');
+                  window.location.href = `tel:${phone}`;
+                  setTimeout(() => setIsCallLoading(false), 1000);
+                } catch (error) {
+                  setIsCallLoading(false);
+                }
               }}
-              className="w-full bg-gradient-to-r from-glass-primary to-glass-secondary text-white font-medium py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+              disabled={isCallLoading}
+              className="w-full bg-gradient-to-r from-glass-primary to-glass-secondary disabled:from-glass-primary/60 disabled:to-glass-secondary/60 disabled:cursor-not-allowed text-white font-medium py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 disabled:hover:scale-100 flex items-center justify-center gap-2"
             >
-              📞 Call
+              {isCallLoading ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <span>Calling...</span>
+                </>
+              ) : (
+                <>
+                  <span>📞</span>
+                  <span>Call</span>
+                </>
+              )}
             </button>
             <button
               onClick={async () => {
-                await handleContactClick('message');
-                window.location.href = `sms:${phone}`;
+                setIsMessageLoading(true);
+                try {
+                  await handleContactClick('message');
+                  window.location.href = `sms:${phone}`;
+                  setTimeout(() => setIsMessageLoading(false), 1000);
+                } catch (error) {
+                  setIsMessageLoading(false);
+                }
               }}
-              className="w-full bg-white/80 backdrop-blur-xl border border-white/40 text-neutral-700 font-medium py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+              disabled={isMessageLoading}
+              className="w-full bg-white/80 backdrop-blur-xl border border-white/40 disabled:opacity-50 disabled:cursor-not-allowed text-neutral-700 font-medium py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2"
             >
-              💬 Message
+              {isMessageLoading ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-neutral-400/30 border-t-neutral-700 rounded-full animate-spin" />
+                  <span>Opening...</span>
+                </>
+              ) : (
+                <>
+                  <span>💬</span>
+                  <span>Message</span>
+                </>
+              )}
             </button>
           </div>
         </div>

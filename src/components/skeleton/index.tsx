@@ -5,33 +5,42 @@ export function HeaderSkeleton() {
         <div className="flex flex-col items-center space-y-5">
           {/* Avatar skeleton */}
           <div className="relative">
-            <div className="w-24 h-24 rounded-full bg-neutral-200 animate-pulse" />
+            <div className="w-24 h-24 rounded-full bg-gradient-to-r from-neutral-200 via-neutral-100 to-neutral-200 bg-[length:200%_100%] animate-shimmer" />
           </div>
           
           {/* Name skeleton */}
           <div className="text-center space-y-2">
-            <div className="h-8 w-48 bg-neutral-200 rounded animate-pulse" />
-            <div className="h-5 w-36 bg-neutral-200 rounded animate-pulse" />
+            <div className="h-8 w-48 bg-gradient-to-r from-neutral-200 via-neutral-100 to-neutral-200 bg-[length:200%_100%] rounded animate-shimmer" style={{ animationDelay: '0.1s' }} />
+            <div className="h-5 w-36 bg-gradient-to-r from-neutral-200 via-neutral-100 to-neutral-200 bg-[length:200%_100%] rounded animate-shimmer" style={{ animationDelay: '0.2s' }} />
           </div>
           
           {/* Location skeleton */}
-          <div className="h-8 w-32 bg-neutral-200 rounded-full animate-pulse" />
+          <div className="h-8 w-32 bg-gradient-to-r from-neutral-200 via-neutral-100 to-neutral-200 bg-[length:200%_100%] rounded-full animate-shimmer" style={{ animationDelay: '0.3s' }} />
+          
+          {/* Contact buttons skeleton */}
+          <div className="flex flex-col space-y-3 w-full max-w-xs">
+            <div className="h-12 w-full bg-gradient-to-r from-neutral-200 via-neutral-100 to-neutral-200 bg-[length:200%_100%] rounded-xl animate-shimmer" style={{ animationDelay: '0.4s' }} />
+            <div className="h-12 w-full bg-gradient-to-r from-neutral-200 via-neutral-100 to-neutral-200 bg-[length:200%_100%] rounded-xl animate-shimmer" style={{ animationDelay: '0.5s' }} />
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-export function ServiceCardSkeleton() {
+export function ServiceCardSkeleton({ index = 0 }: { index?: number }) {
   return (
-    <div className="bg-white/60 backdrop-blur-xl border border-white/20 rounded-2xl p-5 shadow-glass">
+    <div className="bg-white/60 backdrop-blur-xl border border-white/20 rounded-2xl p-5 shadow-glass hover:shadow-glass-hover transition-all duration-500">
       <div className="flex items-center justify-between">
         <div className="flex-1 space-y-3">
-          <div className="h-6 w-32 bg-neutral-200 rounded animate-pulse" />
-          <div className="h-4 w-24 bg-neutral-200 rounded animate-pulse" />
-          <div className="h-4 w-20 bg-neutral-200 rounded animate-pulse" />
+          <div className="h-6 w-32 bg-gradient-to-r from-neutral-200 via-neutral-100 to-neutral-200 bg-[length:200%_100%] rounded animate-shimmer" style={{ animationDelay: `${index * 0.1}s` }} />
+          <div className="h-4 w-24 bg-gradient-to-r from-neutral-200 via-neutral-100 to-neutral-200 bg-[length:200%_100%] rounded animate-shimmer" style={{ animationDelay: `${index * 0.1 + 0.1}s` }} />
+          <div className="h-4 w-20 bg-gradient-to-r from-neutral-200 via-neutral-100 to-neutral-200 bg-[length:200%_100%] rounded animate-shimmer" style={{ animationDelay: `${index * 0.1 + 0.2}s` }} />
         </div>
-        <div className="h-6 w-16 bg-neutral-200 rounded animate-pulse" />
+        <div className="space-y-2">
+          <div className="h-6 w-16 bg-gradient-to-r from-neutral-200 via-neutral-100 to-neutral-200 bg-[length:200%_100%] rounded animate-shimmer" style={{ animationDelay: `${index * 0.1 + 0.3}s` }} />
+          <div className="h-3 w-12 bg-gradient-to-r from-neutral-200 via-neutral-100 to-neutral-200 bg-[length:200%_100%] rounded animate-shimmer" style={{ animationDelay: `${index * 0.1 + 0.4}s` }} />
+        </div>
       </div>
     </div>
   );
@@ -39,11 +48,12 @@ export function ServiceCardSkeleton() {
 
 export function PortfolioSkeleton() {
   return (
-    <div className="grid grid-cols-2 gap-3">
+    <div className="grid grid-cols-3 gap-3">
       {[...Array(6)].map((_, i) => (
         <div
           key={i}
-          className="aspect-square bg-neutral-200 rounded-xl animate-pulse"
+          className="aspect-square bg-gradient-to-r from-neutral-200 via-neutral-100 to-neutral-200 bg-[length:200%_100%] rounded-2xl animate-shimmer shadow-glass"
+          style={{ animationDelay: `${i * 0.05}s` }}
         />
       ))}
     </div>
@@ -52,13 +62,27 @@ export function PortfolioSkeleton() {
 
 export function WorkingHoursSkeleton() {
   return (
-    <div className="bg-white/60 backdrop-blur-xl border border-white/20 rounded-2xl p-5 shadow-glass space-y-4">
-      {[...Array(7)].map((_, i) => (
-        <div key={i} className="flex justify-between items-center">
-          <div className="h-5 w-20 bg-neutral-200 rounded animate-pulse" />
-          <div className="h-5 w-32 bg-neutral-200 rounded animate-pulse" />
+    <div className="bg-white/60 backdrop-blur-xl border border-white/20 rounded-2xl p-6 shadow-glass">
+      {/* Status skeleton */}
+      <div className="mb-4 p-3 rounded-xl bg-gradient-to-r from-neutral-50/50 to-white/50 border border-neutral-100/50">
+        <div className="flex items-center gap-3">
+          <div className="w-3 h-3 rounded-full bg-gradient-to-r from-neutral-200 via-neutral-100 to-neutral-200 bg-[length:200%_100%] animate-shimmer" />
+          <div className="space-y-1">
+            <div className="h-4 w-16 bg-gradient-to-r from-neutral-200 via-neutral-100 to-neutral-200 bg-[length:200%_100%] rounded animate-shimmer" />
+            <div className="h-3 w-24 bg-gradient-to-r from-neutral-200 via-neutral-100 to-neutral-200 bg-[length:200%_100%] rounded animate-shimmer" style={{ animationDelay: '0.1s' }} />
+          </div>
         </div>
-      ))}
+      </div>
+
+      {/* Hours skeleton */}
+      <div className="space-y-2">
+        {[...Array(7)].map((_, i) => (
+          <div key={i} className="flex justify-between items-center py-3 px-4 rounded-xl">
+            <div className="h-4 w-20 bg-gradient-to-r from-neutral-200 via-neutral-100 to-neutral-200 bg-[length:200%_100%] rounded animate-shimmer" style={{ animationDelay: `${i * 0.05}s` }} />
+            <div className="h-4 w-32 bg-gradient-to-r from-neutral-200 via-neutral-100 to-neutral-200 bg-[length:200%_100%] rounded animate-shimmer" style={{ animationDelay: `${i * 0.05 + 0.1}s` }} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -88,7 +112,7 @@ export function PageSkeleton() {
             
             <div className="space-y-3">
               {[...Array(3)].map((_, i) => (
-                <ServiceCardSkeleton key={i} />
+                <ServiceCardSkeleton key={i} index={i} />
               ))}
             </div>
           </section>
