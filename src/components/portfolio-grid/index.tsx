@@ -17,7 +17,11 @@ export function PortfolioGrid({ images = [], onImageClick }: PortfolioGridProps)
   const portfolioItems = Array.from({ length: 6 }, (_, i) => images[i] || null);
 
   const handleImageLoad = (index: number) => {
-    setLoadedImages(prev => new Set([...prev, index]));
+    setLoadedImages(prev => {
+      const newSet = new Set(prev);
+      newSet.add(index);
+      return newSet;
+    });
   };
 
   const handleImageClick = (index: number) => {

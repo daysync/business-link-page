@@ -89,7 +89,9 @@ export function ServiceCard({
             <div className="w-2 h-2 bg-amber-500 rounded-full" title="Variable pricing" />
           )}
           {description && (
-            <Info size={14} className="text-neutral-400" title="More info available" />
+            <div title="More info available">
+              <Info size={14} className="text-neutral-400" />
+            </div>
           )}
         </div>
 
