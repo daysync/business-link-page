@@ -66,7 +66,7 @@ export default function ProfileClient({ username }: ProfileClientProps) {
       name: profileData.name || "Professional",
       title: profileData.description || "Service Provider",
       location: profileData.address || profileData.countryCode || "Location",
-      phone: `+${profileData.phoneCode || ""} ${
+      phone: `${profileData.phoneCode?.startsWith('+') ? profileData.phoneCode : `+${profileData.phoneCode || ""}`} ${
         profileData.phoneNumber || "Contact for details"
       }`.trim(),
       address: profileData.address || "",
@@ -505,15 +505,16 @@ export default function ProfileClient({ username }: ProfileClientProps) {
             </section>
           </div>
 
-          {/* Service Selection Modal */}
-          <ServiceModal
-            isOpen={isServiceModalOpen}
-            onClose={() => setIsServiceModalOpen(false)}
-            service={selectedService}
-            onCall={handleCall}
-          />
         </div>
       </div>
+
+      {/* Service Selection Modal - Moved outside main container for proper z-index */}
+      <ServiceModal
+        isOpen={isServiceModalOpen}
+        onClose={() => setIsServiceModalOpen(false)}
+        service={selectedService}
+        onCall={handleCall}
+      />
     </>
   );
 }

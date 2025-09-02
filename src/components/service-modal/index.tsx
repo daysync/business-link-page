@@ -14,7 +14,7 @@ export function ServiceModal({ isOpen, onClose, service, onCall }: ServiceModalP
   if (!isOpen || !service) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-end justify-center animate-fade-in">
+    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[9999] flex items-end justify-center animate-fade-in">
       <div className="bg-white/95 backdrop-blur-2xl border-t border-white/20 rounded-t-3xl p-6 w-full max-w-lg shadow-glass-lg animate-slide-up">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
